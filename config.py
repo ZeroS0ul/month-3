@@ -1,10 +1,9 @@
 from decouple import config
-from aiogram import Bot, Dispatcher
 
-token = config('BOT_TOKEN')
 
-bot=Bot(token=token)
+bot_token = config('BOT_TOKEN')
 
-dp = Dispatcher()
 
-Admin = [5692990415, ]
+
+
+admin = [5692990415, ]

@@ -1,9 +1,13 @@
+from aiogram import Bot,Dispatcher
 import logging
-from config import bot, dp, Admin
+from config import bot_token, admin
 import asyncio
-from handlers import commands, echo, fsm, fsm_edit
+from handlers import command, echo, fsm, fsm_edit
 from db import main_db
 from aiogram.types import BotCommand
+
+bot = Bot(token=bot_token)
+dp = Dispatcher()
 
 async def set_commands():
     commands = [
@@ -19,10 +23,10 @@ async def set_commands():
 async def on_startup():
     await main_db.init_db()
     await set_commands()
-    for admin_id in Admin:
+    for admin_id in admin:
         await bot.send_message(chat_id=admin_id, text='Бот включен!')
 
-dp.include_router(commands.router_commands)
+dp.include_router(command.router_commands)
 dp.include_router(fsm.router_fsm)
 dp.include_router(fsm_edit.router_edit)
 
