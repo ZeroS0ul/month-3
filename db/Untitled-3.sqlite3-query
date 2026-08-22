@@ -1,0 +1,3 @@
+-- database: ./sqlite3.db
+
+SELECT * FROM products_detail;
