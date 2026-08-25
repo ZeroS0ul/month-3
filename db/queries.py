@@ -32,3 +32,22 @@ update_product = "UPDATE {table} SET {field} = ? WHERE product_id = ?"
 
 delete_product = "DELETE FROM products WHERE product_id = ?"
 delete_product_detail = "DELETE FROM products_detail WHERE product_id = ?"
+
+create_movies_table = """
+    CREATE TABLE IF NOT EXISTS movies (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        genre TEXT NOT NULL,
+        rating REAL NOT NULL
+    )
+"""
+
+insert_movie = """
+    INSERT INTO movies (title, genre, rating)
+    VALUES (?, ?, ?)
+"""
+
+select_movies = """
+    SELECT id, title, genre, rating
+    FROM movies
+"""
