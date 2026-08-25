@@ -2,9 +2,15 @@ from aiogram import Bot,Dispatcher
 import logging
 from config import bot_token, admin
 import asyncio
-from handlers import command, echo, fsm, fsm_edit
+from handlers import command, echo, fsm,fsm2, fsm_edit
 from db import main_db
 from aiogram.types import BotCommand
+
+
+from handlers.fsm2 import router as fsm2_router
+
+
+
 
 bot = Bot(token=bot_token)
 dp = Dispatcher()
@@ -29,7 +35,7 @@ async def on_startup():
 dp.include_router(command.router_commands)
 dp.include_router(fsm.router_fsm)
 dp.include_router(fsm_edit.router_edit)
-
+dp.include_router(fsm2_router)
 
 dp.include_router(echo.router_echo)
 

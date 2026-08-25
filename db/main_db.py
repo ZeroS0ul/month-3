@@ -18,6 +18,7 @@ async def add_product_db(name_product, price, product_id, photo_id):
         await conn.commit()
 
 
+
 async def add_product_detail_db(product_id, category, description):
     async with aiosqlite.connect(path_db) as conn:
         await conn.execute(queries.insert_product_detail, (description, product_id, category))
@@ -67,10 +68,10 @@ async def init_db():
     conn.close()
 
 
-async def add_product_db(name_product, price, product_id):
+async def add_product_db(name_product, price, product_id,photo_id):
     conn = sqlite3.connect(path_db)
     cursor = conn.cursor()
-    cursor.execute(queries.insert_product, (name_product, price, product_id))
+    cursor.execute(queries.insert_product, (name_product, price, product_id,photo_id))
     conn.commit()
     conn.close()
 
