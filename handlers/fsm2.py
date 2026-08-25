@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
 
-from db.homework_db import add_movie, get_movies
+from db.homework_db import add_movie, add_movie_detail, get_movies
 
 
 router = Router()
@@ -31,7 +31,6 @@ async def cancel_form(message: Message, state: FSMContext):
 @router.message(MovieForm.title)
 async def get_title(message: Message, state: FSMContext):
     await state.update_data(title=message.text)
-
     await state.set_state(MovieForm.genre)
     await message.answer("Введите жанр фильма:")
 
@@ -39,7 +38,6 @@ async def get_title(message: Message, state: FSMContext):
 @router.message(MovieForm.genre)
 async def get_genre(message: Message, state: FSMContext):
     await state.update_data(genre=message.text)
-
     await state.set_state(MovieForm.rating)
     await message.answer("Введите оценку от 1 до 10:")
 
@@ -58,10 +56,14 @@ async def get_rating(message: Message, state: FSMContext):
 
     data = await state.get_data()
 
-    add_movie(
+    movie_id = add_movie(
         data["title"],
-        data["genre"],
         rating
+    )
+
+    add_movie_detail(
+        movie_id,
+        data["genre"]
     )
 
     await message.answer(
@@ -82,7 +84,7 @@ async def show_movies(message: Message):
         await message.answer("В базе пока нет фильмов.")
         return
 
-    text = "Фильмы из базы:\n\n"
+    text = "Список фильмов:\n\n"
 
     for movie in movies:
         text += (
